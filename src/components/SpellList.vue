@@ -37,7 +37,6 @@ export default {
         if (!res.ok) {
           // @todo Need a better error handling.
           const error = new Error(res.statusText);
-          error.json = res.json();
           throw error;
         }
 
@@ -49,13 +48,6 @@ export default {
       })
       .catch(err => {
         error.value = err;
-        // In case a custom JSON error response was provided
-        if (err.json) {
-          return err.json.then(json => {
-            // set the JSON response message
-            error.value.message = json.message;
-          });
-        }
       })
       .then(() => {
         loading.value = false;
