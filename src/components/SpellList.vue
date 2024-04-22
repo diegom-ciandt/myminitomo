@@ -23,29 +23,30 @@ const BASE_URL = 'https://www.dnd5eapi.co';
 export default {
   name: 'SpellList',
   setup() {
-    const spells = ref();
-    const loading = ref(true);
+    const spells = ref(JSON.parse(localStorage.getItem('spells') || 'null'));
+    const loading = ref(!spells.value);
     const error = ref(null);
 
     const getAllSpells = async () => {
-      const spellIndexesResponse = await fetch(BASE_URL + "/api/spells");
-      const spellIndexes = await spellIndexesResponse.json();
-      
-      const spellsPromises = spellIndexes.results.map(async index => {
-        const spellResponse = await fetch(BASE_URL + index.url);
-        return spellResponse.json();
-      });
+      if (!spells.value) {
+        try {
+          const spellIndexesResponse = await fetch(BASE_URL + "/api/spells");
+          const spellIndexes = await spellIndexesResponse.json();
+          
+          const spellsPromises = spellIndexes.results.map(async index => {
+            const spellResponse = await fetch(BASE_URL + index.url);
+            return spellResponse.json();
+          });
 
-      spells.value = await Promise.all(spellsPromises);
-      loading.value = false;
+          spells.value = await Promise.all(spellsPromises);
+          localStorage.setItem('spells', JSON.stringify(spells.value));
+        } catch (e:any) {
+          error.value = e;
+        } finally {
+          loading.value = false;
+        }
+      }
     };
-
-    try {
-      getAllSpells();
-    } catch (e:any) {
-      error.value = e;
-      loading.value = false;
-    }
 
     onMounted(getAllSpells);
 
@@ -56,8 +57,8 @@ export default {
     };
   }
 };
-
 </script>
+
 <style lang="scss">
 .spell-item {
   display: flex;
