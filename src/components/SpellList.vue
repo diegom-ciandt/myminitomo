@@ -5,10 +5,11 @@
       <li v-for="spell of spells" :id="spell.index" class="spell-item">
         <p><strong>{{spell.name}}</strong></p>
         <p>Level: {{spell.level}}</p>
+        <p>Classes: <span v-for="dndClass of spell.classes" class="icon icon-[dndClass.name]">{{dndClass.name}}</span></p>
       </li>
     </ul>
     <p v-if="loading">
-      Loading
+      This action requires a lot of concentration... Loading Spells...
     </p>
     <p v-if="error">
       Oh no! We couldn't load the Spells! I bet it's the Necromancer fault!
@@ -17,46 +18,36 @@
 </template>
 <script lang="ts" allowJs>
 import { ref, onMounted } from "vue";
+
+const BASE_URL = 'https://www.dnd5eapi.co';
 export default {
   name: 'SpellList',
   setup() {
-    const spells = ref(null);
+    const spells = ref();
     const loading = ref(true);
     const error = ref(null);
 
-    function fetchSpells() {
-      loading.value = true;
-      // @todo Main domain need to be in a global config.
-      return fetch('https://www.dnd5eapi.co/api/spells', {
-        method: 'get',
-        headers: {
-          'content-type': 'application/json'
-        }
-      })
-      .then(res => {
-        if (!res.ok) {
-          // @todo Need a better error handling.
-          const error = new Error(res.statusText);
-          throw error;
-        }
-
-        return res.json();
-      })
-      .then(json => {
-        // set the response data
-        spells.value = json.results;
-      })
-      .catch(err => {
-        error.value = err;
-      })
-      .then(() => {
-        loading.value = false;
+    const getAllSpells = async () => {
+      const spellIndexesResponse = await fetch(BASE_URL + "/api/spells");
+      const spellIndexes = await spellIndexesResponse.json();
+      
+      const spellsPromises = spellIndexes.results.map(async index => {
+        const spellResponse = await fetch(BASE_URL + index.url);
+        return spellResponse.json();
       });
+
+      spells.value = await Promise.all(spellsPromises);
+      loading.value = false;
+    };
+
+    try {
+      getAllSpells();
+    } catch (e:any) {
+      error.value = e;
+      loading.value = false;
     }
 
-    onMounted(() => {
-      fetchSpells();
-    });
+    onMounted(getAllSpells);
 
     return {
       spells,
@@ -64,7 +55,8 @@ export default {
       error
     };
   }
-}
+};
+
 </script>
 <style lang="scss">
 .spell-item {
