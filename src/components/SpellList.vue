@@ -3,9 +3,9 @@
     <h2 class="spell-list-title">Spell List</h2>
     <ul v-if="!loading && spells && spells.length">
       <li v-for="spell of spells" :id="spell.index" class="spell-item">
-        <p><strong>{{spell.name}}</strong></p>
-        <p>Level: {{spell.level}}</p>
-        <p>Classes: <span v-for="dndClass of spell.classes" class="icon icon-[dndClass.name]">{{dndClass.name}}</span></p>
+        <p class="spell-item-name"><strong>{{spell.name}}</strong></p>
+        <p class="spell-item-level">Level: {{spell.level}}</p>
+        <p class="spell-item-classes"><span v-for="dndClass of spell.classes" :class="'no-text icon icon-' + dndClass.name.toLowerCase()"></span></p>
       </li>
     </ul>
     <p v-if="loading">
@@ -60,9 +60,32 @@ export default {
 </script>
 
 <style lang="scss">
+.spell-list-container {
+  max-width: 500px;
+}
+
 .spell-item {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+
+  &:nth-child(even) {
+    background-color: lightgray;
+  }
+
+  &:hover {
+    background-color: lightblue;
+  }
+
+  &-name {
+    width: 100px;
+  }
+
+  &-classes {
+    min-width: 100px;
+    text-align: right;
+  }
 }
+
 </style>
