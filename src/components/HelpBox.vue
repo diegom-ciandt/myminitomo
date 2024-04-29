@@ -33,13 +33,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 .help-box {
-  position: fixed;
-  top: 30px;
-  left: 30px;
-  max-width: 600px;
   background-color: lightgray;
   padding: 20px;
   border-top-right-radius: 50px;
-  border-bottom-left-radius: 50px;;
+  border-bottom-left-radius: 50px;
 }
 </style>

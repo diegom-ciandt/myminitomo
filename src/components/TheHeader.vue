@@ -12,5 +12,6 @@ export default {
 header {
   display: flex;
   justify-content: center;
+  margin: 5vh 0;
 }
 </style>

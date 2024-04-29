@@ -1,7 +1,9 @@
 <template>
   <the-header />
-  <SpellList />
-  <HelpBox />
+  <div class="main" id="main">
+    <HelpBox />
+    <SpellList />
+  </div>
   <the-footer />
 </template>
 
@@ -23,6 +25,19 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
+.main {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100vw;
+
+  & > div {
+    width: 25vw;
+    margin: 0 5vw;
+  }
+}
+
 .icon {
   &::after {
     display: inline;
