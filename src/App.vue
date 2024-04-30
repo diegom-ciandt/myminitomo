@@ -2,7 +2,16 @@
   <the-header />
   <div class="main" id="main">
     <HelpBox />
-    <SpellList />
+    <SpellList @deigo="addNewSelectedCard"/>
+    <div class="selected-list-container">
+      <h2 class="selected-list-title">Selected Cards</h2>
+      <button @click="clearSelectedCards" class="btn btn-primary selected-list-refresh">Remove all Cards</button>
+      <ul v-if="selectedCards && selectedCards.length" >
+        <li v-for="card of selectedCards" class="selected-item">
+          <Card :id="card.id" :card="card" />
+        </li>
+      </ul>
+    </div>
   </div>
   <the-footer />
 </template>
@@ -14,6 +23,7 @@ import TheHeader from "./components/TheHeader.vue"
 import TheFooter from "./components/TheFooter.vue"
 import SpellList from "./components/SpellList.vue"
 import HelpBox from "./components/HelpBox.vue";
+import Card from "./components/Card.vue";
 
 export default defineComponent({
   components: {
@@ -21,6 +31,37 @@ export default defineComponent({
     TheFooter,
     HelpBox,
     SpellList,
+    Card,
+  },
+  data() {
+    return {
+      selectedCards: [{}],
+    };
+  },
+  created() {
+    this.loadSelectedCards();
+    window.addEventListener('storage', this.loadSelectedCards);
+  },
+  beforeUnmount() {
+    window.removeEventListener('storage', this.loadSelectedCards);
+  },
+  methods: {
+    clearSelectedCards() {
+      this.selectedCards = [];
+      localStorage.setItem('selectedCards', JSON.stringify(this.selectedCards));
+    },
+    loadSelectedCards() {
+      this.selectedCards = JSON.parse(localStorage.getItem('selectedCards') || '[]');
+    },
+    addNewSelectedCard(card: any) {
+      if (this.selectedCards.find((c: any) => c.index === card.index)) {
+        return;
+      }
+      card.id = uniqueId("selected-card-");
+      this.selectedCards.push(card);
+      localStorage.setItem('selectedCards', JSON.stringify(this.selectedCards));
+      this.loadSelectedCards();
+    },
   }
 });
 </script>
@@ -85,6 +126,22 @@ export default defineComponent({
 
   &-wizard::after {
     content: '🧙‍♂️';
+  }
+}
+
+.btn {
+  &-primary {
+    background-color: purple;
+    border: 1px solid purple;
+    color: white;
+    padding: 10px;
+    margin-top: 10px;
+    opacity: 0.2;
+    transition: opacity 0.8s;
+
+    &:hover {
+      opacity: 1;
+    }
   }
 }
 </style>

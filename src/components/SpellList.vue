@@ -1,9 +1,9 @@
 <template>
   <div class="spell-list-container">
     <h2 class="spell-list-title">Spell List</h2>
-    <button @click="clearLocalStorage" class="spell-list-refresh">Recast loading Spells</button>
+    <button @click="clearLocalStorage" class="btn btn-primary spell-list-refresh">Recast loading Spells</button>
     <ul v-if="!loading && spells && spells.length">
-      <li v-for="spell of spells" :id="spell.index" class="spell-item">
+      <li v-for="spell of spells" :id="spell.index" class="spell-item" @click="selectCard(spell)">
         <p class="spell-item-name"><strong>{{spell.name}}</strong></p>
         <p class="spell-item-level">Level: {{spell.level}}</p>
         <p class="spell-item-classes"><span v-for="dndClass of spell.classes" :class="'no-text icon icon-' + dndClass.name.toLowerCase()"></span></p>
@@ -18,10 +18,10 @@
   </div>
 </template>
 <script lang="ts" allowJs>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineComponent } from "vue";
 
 const BASE_URL = 'https://www.dnd5eapi.co';
-export default {
+export default defineComponent({
   name: 'SpellList',
   setup() {
     const spells = ref(JSON.parse(localStorage.getItem('spells') || 'null'));
@@ -67,9 +67,12 @@ export default {
     clearLocalStorage() {
       localStorage.removeItem('spells');
       location.reload();
+    },
+    selectCard(spell: never) {
+      this.$emit('deigo', spell);
     }
   }
-};
+});
 </script>
 
 
@@ -78,20 +81,6 @@ export default {
   &-container {
     max-width: 500px;
   }
-
-  &-refresh {
-    background-color: purple;
-    border: 1px solid purple;
-    color: white;
-    padding: 10px;
-    margin-top: 10px;
-    opacity: 0.2;
-    transition: opacity 0.8s;
-
-    &:hover {
-      opacity: 1;
-    }
-  }
 }
 
 .spell-item {
@@ -99,6 +88,8 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
+  padding: 0 10px;
 
   &:nth-child(even) {
     background-color: lightgray;
@@ -110,6 +101,7 @@ export default {
 
   &-name {
     width: 100px;
+    word-break: break-all;
   }
 
   &-classes {
