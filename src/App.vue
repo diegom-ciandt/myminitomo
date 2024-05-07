@@ -84,6 +84,7 @@ export default defineComponent({
     display: inline;
   }
 
+  //** Icons for classes */
   &-barbarian::after {
     content: '🪓';
   }
@@ -101,7 +102,7 @@ export default defineComponent({
   }
 
   &-paladin::after {
-    content: '🛡️';
+    content: '⚔️';
   }
 
   &-bard::after {
@@ -127,6 +128,91 @@ export default defineComponent({
   &-wizard::after {
     content: '🧙‍♂️';
   }
+
+  &-artificer::after {
+    content: '🔧';
+  }
+
+  //** Icons for conjuration schools */
+  &-necromancy::after {
+    content: '💀';
+  }
+
+  &-abjuration::after {
+    content: '🛡️';
+  }
+
+  &-evocation::after {
+    content: '🔥';
+  }
+
+  &-enchantment::after {
+    content: '✨';
+  }
+
+  &-illusion::after {
+    content: '👻';
+  }
+
+  &-transmutation::after {
+    content: '🐉';
+  }
+
+  &-divination::after {
+    content: '✝️';
+  }
+
+  &-conjuration::after {
+    content: '🎩';
+  }
+
+  &-universal::after {
+    content: '🌐';
+  }
+
+  /** Icons for Spell attributes */
+  &-ritual::after {
+    content: '🕯️';
+  }
+
+  &-concentration::after {
+    content: '🧠';
+  }
+
+  &-somatic::after {
+    content: '👋';
+  }
+
+  &-verbal::after {
+    content: '🗣️';
+  }
+
+  &-material::after {
+    content: '📦';
+  }
+
+  &-range::after {
+    content: '🎯';
+  }
+
+  &-duration::after {
+    content: '⏳';
+  }
+
+  &-casting-time::after {
+    content: '⏱️';
+  }
+
+  &-negate{
+    &::before {
+      content: '🚫';
+      position: absolute;
+    }
+    &::after {
+      opacity: .5;
+    }
+  }
+
 }
 
 .btn {
