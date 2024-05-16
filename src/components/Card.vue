@@ -9,7 +9,7 @@
             <div class="card-level">{{ card.level }}</div>
           </div>
           <div class="card-container-image">
-            <img class="card-image" src="@/assets/card/Spell-not-found.png" :alt="card.name" />
+            <img class="card-image" v-bind:src="getImageUrl(card.index)" :alt="card.name" />
           </div>
           <div class="card-container-data">
             <div class="card-container-attibutes">
@@ -73,7 +73,6 @@
 </template>
 <script lang="ts" allowJs>
 import { defineComponent } from "vue";
-// import spellNotFoundImage from "@/assets/card/Spell-not-found.png";
 
 export default defineComponent({
   name: 'Card',
@@ -81,16 +80,19 @@ export default defineComponent({
     id: { required: true, type: String },
     card: { required: true, type: Object },
   },
-  computed: {
-    spellImage() {
-      return this.card.image ?? "@/assets/card/Spell-not-found.png";
-    },
-  },
   methods: {
     deleteCard() {
       console.log('Delete card', this.card);
       this.$emit('delete-selected-card', this.card);
     },
+    getImageUrl(index: string) {
+      var images = require.context('../assets/card/', false, /\.png$/);
+      try {
+        return images('./' + index + ".png");
+      } catch (e) {
+        return images('./Spell-not-found.png');
+      }
+    }
   },
 });
 </script>
