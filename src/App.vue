@@ -7,8 +7,8 @@
       <h2 class="selected-list-title">Selected Cards</h2>
       <button @click="clearSelectedCards" class="btn btn-primary selected-list-refresh">Remove all Cards</button>
       <ul v-if="selectedCards && selectedCards.length" >
-        <li v-for="card of selectedCards" class="selected-item">
-          <Card :id="card.id" :card="card" />
+        <li v-for="card of selectedCards" class="selected-card">
+          <Card :id="card.id" :card="card" @delete-selected-card="deleteSelectedCard(card)"/>
         </li>
       </ul>
     </div>
@@ -62,6 +62,10 @@ export default defineComponent({
       localStorage.setItem('selectedCards', JSON.stringify(this.selectedCards));
       this.loadSelectedCards();
     },
+    deleteSelectedCard(card: any) {
+      this.selectedCards = this.selectedCards.filter((c: any) => c.id !== card.id);
+      localStorage.setItem('selectedCards', JSON.stringify(this.selectedCards));
+    },
   }
 });
 </script>
@@ -74,8 +78,8 @@ export default defineComponent({
   width: 100vw;
 
   & > div {
-    width: 25vw;
-    margin: 0 5vw;
+    width: 30vw;
+    margin: 0 3vw;
   }
 }
 
@@ -215,6 +219,7 @@ export default defineComponent({
 
 }
 
+// Buttons.
 .btn {
   &-primary {
     background-color: purple;
@@ -230,4 +235,10 @@ export default defineComponent({
     }
   }
 }
+
+
+  
+.selected-card + .selected-card {
+    margin-top: 30px;
+  }
 </style>

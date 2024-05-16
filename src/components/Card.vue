@@ -64,6 +64,10 @@
         </div>
       </div>
     </div>
+    <div class="card-actions-container">
+      <h4>Actions:</h4>
+      <button class="btn btn-primary" @click="deleteCard">Remove Card</button>
+    </div>
     <pre>{{ card }}</pre>
   </div>
 </template>
@@ -81,17 +85,25 @@ export default defineComponent({
     spellImage() {
       return this.card.image ?? "@/assets/card/Spell-not-found.png";
     },
-  }
+  },
+  methods: {
+    deleteCard() {
+      console.log('Delete card', this.card);
+      this.$emit('delete-selected-card', this.card);
+    },
+  },
 });
 </script>
 <style lang="scss">
 .card {
+  display: flex;
+  flex-direction: row;
+
   &-container {
     border: 1px solid black;
     width: 500px;
     height: 640px;
-    margin: 0 auto;
-    margin-top: 56px;
+    margin-right: 1vw;
     border-radius: 25px;
     box-sizing: border-box;
     box-shadow: -8px 9px 16px -3px gray;
@@ -186,6 +198,11 @@ export default defineComponent({
   &-divider {
     background-color: #4d4d4d5e;
     width: 1px;
+  }
+
+  &-actions-container {
+    display: flex;
+    flex-direction: column;
   }
 
   pre {
