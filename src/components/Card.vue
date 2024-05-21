@@ -9,7 +9,12 @@
             <div class="card-level">{{ card.level }}</div>
           </div>
           <div class="card-container-image">
-            <img class="card-image" v-bind:src="getImageUrl(card.index)" :alt="card.name" />
+            <img v-if="!(card.changeImage ?? false)" class="card-image" v-bind:src="getImageUrl(card)" :alt="card.name" />
+            <div v-else class="card-container-image-change">
+              <h4>Change this image</h4>
+              <input type="text" v-model="card.image" placeholder="Enter image URL" />
+              <button class="btn btn-primary" @click="changeImage()">Save</button>
+            </div>
           </div>
           <div class="card-container-data">
             <div class="card-container-attibutes">
@@ -67,6 +72,7 @@
     <div class="card-actions-container">
       <h4>Actions:</h4>
       <button class="btn btn-primary" @click="deleteCard">Remove Card</button>
+      <button class="btn btn-primary" @click="card.changeImage = true">Change Image</button>
     </div>
     <pre>{{ card }}</pre>
   </div>
@@ -85,13 +91,21 @@ export default defineComponent({
       console.log('Delete card', this.card);
       this.$emit('delete-selected-card', this.card);
     },
-    getImageUrl(index: string) {
+    getImageUrl(card: any) {
+      if (card.image) {
+        return card.image;
+      }
+      var index = card.index;
       var images = require.context('../assets/card/', false, /\.png$/);
       try {
         return images('./' + index + ".png");
       } catch (e) {
         return images('./Spell-not-found.png');
       }
+    },
+    changeImage() {
+      this.card.changeImage = false;
+      this.$emit('change-selected-card-image', this.card);
     }
   },
 });
@@ -116,6 +130,15 @@ export default defineComponent({
       border-end-end-radius: 10px;
       border-start-start-radius: 10px;
       background-color: white;
+      min-height: 270px;
+
+      &-change {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        height: 100%;
+      }
     }
 
     &-data {

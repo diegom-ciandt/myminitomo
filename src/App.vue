@@ -8,7 +8,11 @@
       <button @click="clearSelectedCards" class="btn btn-primary selected-list-refresh">Remove all Cards</button>
       <ul v-if="selectedCards && selectedCards.length" >
         <li v-for="card of selectedCards" class="selected-card">
-          <Card :id="card.id" :card="card" @delete-selected-card="deleteSelectedCard(card)"/>
+          <Card 
+            :id="card.id"
+            :card="card"
+            @delete-selected-card="deleteSelectedCard(card)"
+            @change-selected-card-image="changeSelectedCardImage(card)"/>
         </li>
       </ul>
     </div>
@@ -64,6 +68,11 @@ export default defineComponent({
     },
     deleteSelectedCard(card: any) {
       this.selectedCards = this.selectedCards.filter((c: any) => c.id !== card.id);
+      localStorage.setItem('selectedCards', JSON.stringify(this.selectedCards));
+    },
+    changeSelectedCardImage(card: any) {
+      const index = this.selectedCards.findIndex((c: any) => c.id === card.id);
+      this.selectedCards[index] = card;
       localStorage.setItem('selectedCards', JSON.stringify(this.selectedCards));
     },
   }
