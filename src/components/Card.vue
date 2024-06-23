@@ -69,7 +69,7 @@
         </div>
       </div>
     </div>
-    <div class="card-actions-container">
+    <div class="card-actions-container not-printable">
       <h4>Actions:</h4>
       <button class="btn btn-primary" @click="deleteCard">Remove Card</button>
       <button class="btn btn-primary" @click="card.changeImage = true">Change Image</button>
@@ -119,6 +119,7 @@ export default defineComponent({
     border: 1px solid black;
     width: 500px;
     height: 640px;
+    padding-bottom: 20px;
     margin-right: 1vw;
     border-radius: 25px;
     box-sizing: border-box;
@@ -130,7 +131,7 @@ export default defineComponent({
       border-end-end-radius: 10px;
       border-start-start-radius: 10px;
       background-color: white;
-      min-height: 270px;
+      min-height: 40%;
 
       &-change {
         display: flex;
@@ -234,4 +235,5 @@ export default defineComponent({
     display: none;
   }
 }
+
 </style>

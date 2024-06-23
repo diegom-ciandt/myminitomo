@@ -1,5 +1,5 @@
 <template>
-  <div class="spell-list-container">
+  <div class="spell-list-container not-printable">
     <h2 class="spell-list-title">Spell List</h2>
     <button @click="clearLocalStorage" class="btn btn-primary spell-list-refresh">Recast loading Spells</button>
     <div class="spell-list-filters">

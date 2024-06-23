@@ -76,4 +76,17 @@ body {
     line-height: 1.31579;
   }
 }
+
+@media print {
+  /* All your print styles go here */
+  header,
+  footer,
+  .not-printable {
+    display: none !important;
+  }
+
+  body {
+    background: none;
+  }
+}
 /*END RESETS*/

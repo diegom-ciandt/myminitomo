@@ -1,5 +1,5 @@
 <template>
-  <div class="help-box">
+  <div class="help-box not-printable">
     <h3>Help Box</h3>
     <ul>
       <li v-for="item in helpBoxItems" :key="item.id">
