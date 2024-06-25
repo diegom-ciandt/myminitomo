@@ -230,6 +230,58 @@ export default defineComponent({
     }
   }
 
+  /** Icon for damage types */
+  &-damage-acid::after {
+    content: '🟢';
+  }
+
+  &-damage-bludgeoning::after {
+    content: '🔨';
+  }
+
+  &-damage-cold::after {
+    content: '❄️';
+  }
+
+  &-damage-fire::after {
+    content: '🔥';
+  }
+
+  &-damage-force::after {
+    content: '💥';
+  }
+
+  &-damage-lightning::after {
+    content: '⚡';
+  }
+
+  &-damage-necrotic::after {
+    content: '💀';
+  }
+
+  &-damage-piercing::after {
+    content: '🔪';
+  }
+
+  &-damage-poison::after {
+    content: '☠️';
+  }
+
+  &-damage-psychic::after {
+    content: '🌀';
+  }
+
+  &-damage-radiant::after {
+    content: '🌞';
+  }
+
+  &-damage-slashing::after {
+    content: '🗡️';
+  }
+
+  &-damage-thunder::after {
+    content: '⚡';
+  }
 }
 
 // Buttons.

@@ -34,7 +34,7 @@
               </div>
             </div>
             <div class="card-description">
-              <p v-for="description in card.desc">{{ description }}</p>
+              <p v-for="description in card.desc" v-html="formatCardDescription(description)"></p>
             </div>
             <div class="card-container-specs">
               <div class="card-spec">
@@ -78,7 +78,7 @@
   </div>
 </template>
 <script lang="ts" allowJs>
-import { defineComponent } from "vue";
+import { defineComponent, toRaw } from "vue";
 
 export default defineComponent({
   name: 'Card',
@@ -87,6 +87,13 @@ export default defineComponent({
     card: { required: true, type: Object },
   },
   methods: {
+    formatCardDescription(description: string): string {
+      const damageRegex = /\b(\d+d\d+)\s(\w+)\sdamage\b/g;
+      const diceRegex = /\b(\d+)(d\d+)\b/g;
+      return description
+        .replace(damageRegex, '$1 <b class="icon icon-damage-$2">$2</b> <b>damage</b>')
+        .replace(diceRegex, '<b class="icon icon-dice-$2">$1$2</b>');
+    },
     deleteCard() {
       console.log('Delete card', this.card);
       this.$emit('delete-selected-card', this.card);
