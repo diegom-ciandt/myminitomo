@@ -17,18 +17,18 @@
             </div>
           </div>
           <div class="card-container-data">
-            <div class="card-container-attibutes">
-              <div class="card-attibute">
+            <div class="card-container-attributes">
+              <div class="card-attribute">
                 <span class="icon icon-range"></span>
                 <span>{{ card.range }}</span>
               </div>
               <div class="card-divider"></div>
-              <div class="card-attibute">
+              <div class="card-attribute">
                 <span class="icon icon-casting-time"></span>
                 <span>{{ card.casting_time }}</span>
               </div>
               <div class="card-divider"></div>
-              <div class="card-attibute">
+              <div class="card-attribute">
                 <span class="icon icon-duration"></span>
                 <span>{{ card.duration }}</span>
               </div>
@@ -157,7 +157,7 @@ export default defineComponent({
       background-color: beige;
     }
 
-    &-attibutes {
+    &-attributes {
       display: flex;
       justify-content: space-between;
       padding: 5px;
