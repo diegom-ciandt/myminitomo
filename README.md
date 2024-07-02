@@ -15,6 +15,7 @@ There are a few steps to configure it correctly.
 
 ### Pre-requirements
 1. Install nodejs (at least version v16.14.0 - use other versions at you choice)
+1. Install Vue Cli Service
 1. Chrome Browser (didn't have time to test on other browsers yet)
 1. Install git (since you have to clone it somehow)
 
