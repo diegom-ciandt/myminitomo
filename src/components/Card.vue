@@ -1,6 +1,6 @@
 <template>
   <div :id="id" class="card">
-    <div class="card-container">
+    <div :class="'card-container card-container-'+ card.school.index">
       <div class="card-background">
         <div class="card-frame">
           <div class="card-header">
@@ -134,10 +134,10 @@ export default defineComponent({
     background: #171314;
 
     &-image {
-      padding: 5px;
+      padding-top: 5px;
       border-end-end-radius: 10px;
       border-start-start-radius: 10px;
-      background-color: white;
+      background-color: #FFFFFFBB;
       min-height: 40%;
 
       &-change {
@@ -154,7 +154,8 @@ export default defineComponent({
       padding: 5px;
       border-end-start-radius: 10px;
       border-start-end-radius: 10px;
-      background-color: beige;
+      background-color: #FFFFFFBB;
+      text-shadow: 1px 1px beige;
     }
 
     &-attributes {
@@ -174,8 +175,9 @@ export default defineComponent({
   }
 
   &-background {
-    height: 600px;
-    margin: 20px 20px 0 20px;
+    height: 625px;
+    margin: 5px;
+    padding: 15px;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
     border-bottom-left-radius: 8%;
@@ -200,6 +202,13 @@ export default defineComponent({
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
+  }
+
+  &-level {
+    background-color: #FFFFFFBB;
+    border-radius: 100%;
+    min-width: 25px;
+    text-align: center;
   }
 
   &-image {
@@ -240,6 +249,89 @@ export default defineComponent({
 
   pre {
     display: none;
+  }
+}
+
+ // School colors.
+.card-container {
+  &-necromancy {
+    .card-background {
+      background-image: url("~@/assets/Necromancy-Background.webp");
+    }
+
+    h4 {
+      color: #068100;
+    }
+  }
+
+  &-abjuration {
+    .card-background {
+      background-image: url("~@/assets/Abjuration-Background.webp");
+    }
+
+    h4 {
+      color: white;
+    }
+  }
+
+  &-evocation {
+    .card-background {
+      background-image: url("~@/assets/Evocation-Background.webp");
+    }
+
+    h4 {
+      color: red;
+    }
+  }
+
+  &-enchantment {
+    .card-background {
+      background-image: url("~@/assets/Enchantment-Background.webp");
+    }
+
+    h4 {
+      color: white;
+    }
+  }
+
+  &-illusion {
+    .card-background {
+      background-image: url("~@/assets/Illusion-Background.webp");
+    }
+
+    h4 {
+      color: white;
+    }
+  }
+
+  &-transmutation {
+    .card-background {
+      background-image: url("~@/assets/Transmutation-Background.webp");
+    }
+
+    h4 {
+      color: #c4f705;
+    }
+  }
+
+  &-divination {
+    .card-background {
+      background-image: url("~@/assets/Divination-Background.webp");
+    }
+
+    h4 {
+      color: #c4f705;
+    }
+  }
+
+  &-conjuration {
+    .card-background {
+      background-image: url("~@/assets/Conjuration-Background.webp");
+    }
+
+    h4 {
+      color: #c4f705;
+    }
   }
 }
 

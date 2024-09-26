@@ -9,7 +9,7 @@
       <button @click="printSelectedCards" class="btn btn-primary selected-list-print not-printable">Print all Cards</button>
       <ul v-if="selectedCards && selectedCards.length" >
         <li v-for="card of selectedCards" class="selected-card">
-          <Card 
+          <Card
             :id="card.id"
             :card="card"
             @delete-selected-card="deleteSelectedCard(card)"
@@ -150,7 +150,7 @@ export default defineComponent({
     content: '🔧';
   }
 
-  //** Icons for conjuration schools */
+  //** Icons for magic schools */
   &-necromancy::after {
     content: '💀';
   }
@@ -181,10 +181,6 @@ export default defineComponent({
 
   &-conjuration::after {
     content: '🎩';
-  }
-
-  &-universal::after {
-    content: '🌐';
   }
 
   /** Icons for Spell attributes */
