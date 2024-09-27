@@ -7,7 +7,7 @@
       <h2 class="selected-list-title not-printable">Selected Cards</h2>
       <button @click="clearSelectedCards" class="btn btn-primary selected-list-refresh not-printable">Remove all Cards</button>
       <button @click="printSelectedCards" class="btn btn-primary selected-list-print not-printable">Print all Cards</button>
-      <ul v-if="selectedCards && selectedCards.length" >
+      <ul v-if="selectedCards && selectedCards.length" class="selected-list" >
         <li v-for="card of selectedCards" class="selected-card">
           <Card
             :id="card.id"
@@ -304,12 +304,17 @@ export default defineComponent({
   }
 }
 
+.selected-list {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
 .selected-list-print {
   margin-left: 10px;
 }
 
 .selected-card + .selected-card {
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 @media print {
