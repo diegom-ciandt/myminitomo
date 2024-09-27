@@ -266,7 +266,7 @@ export default defineComponent({
 .card-container {
   &-necromancy {
     .card-background {
-      background-image: url("~@/assets/Necromancy-Background.webp");
+      background-image: url("~@/assets/Backgrounds/Necromancy-Background.webp");
     }
 
     h4 {
@@ -276,7 +276,7 @@ export default defineComponent({
 
   &-abjuration {
     .card-background {
-      background-image: url("~@/assets/Abjuration-Background.webp");
+      background-image: url("~@/assets/Backgrounds/Abjuration-Background.webp");
     }
 
     h4 {
@@ -286,7 +286,7 @@ export default defineComponent({
 
   &-evocation {
     .card-background {
-      background-image: url("~@/assets/Evocation-Background.webp");
+      background-image: url("~@/assets/Backgrounds/Evocation-Background.webp");
     }
 
     h4 {
@@ -296,7 +296,7 @@ export default defineComponent({
 
   &-enchantment {
     .card-background {
-      background-image: url("~@/assets/Enchantment-Background.webp");
+      background-image: url("~@/assets/Backgrounds/Enchantment-Background.webp");
     }
 
     h4 {
@@ -306,7 +306,7 @@ export default defineComponent({
 
   &-illusion {
     .card-background {
-      background-image: url("~@/assets/Illusion-Background.webp");
+      background-image: url("~@/assets/Backgrounds/Illusion-Background.webp");
     }
 
     h4 {
@@ -316,7 +316,7 @@ export default defineComponent({
 
   &-transmutation {
     .card-background {
-      background-image: url("~@/assets/Transmutation-Background.webp");
+      background-image: url("~@/assets/Backgrounds/Transmutation-Background.webp");
     }
 
     h4 {
@@ -326,7 +326,7 @@ export default defineComponent({
 
   &-divination {
     .card-background {
-      background-image: url("~@/assets/Divination-Background.webp");
+      background-image: url("~@/assets/Backgrounds/Divination-Background.webp");
     }
 
     h4 {
@@ -336,7 +336,7 @@ export default defineComponent({
 
   &-conjuration {
     .card-background {
-      background-image: url("~@/assets/Conjuration-Background.webp");
+      background-image: url("~@/assets/Backgrounds/Conjuration-Background.webp");
     }
 
     h4 {
