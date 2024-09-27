@@ -13,7 +13,7 @@
             <div v-else class="card-container-image-change">
               <h4>Change this image</h4>
               <input type="text" v-model="card.image" placeholder="Enter image URL" />
-              <button class="btn btn-primary" @click="changeImage()">Save</button>
+              <button class="btn btn-secondary" @click="changeImage()">Save</button>
             </div>
           </div>
           <div class="card-container-data">
@@ -134,6 +134,7 @@ export default defineComponent({
     background: #171314;
 
     &-image {
+      position: relative;
       padding-top: 5px;
       border-end-end-radius: 10px;
       border-start-start-radius: 10px;
@@ -141,11 +142,20 @@ export default defineComponent({
       min-height: 40%;
 
       &-change {
+        position: absolute;
+        bottom: 0;
+        background-color: white;
+        width: 100%;
+        height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
         align-items: center;
         height: 100%;
+
+        h4 {
+          color: blue !important;
+        }
       }
     }
 

@@ -282,18 +282,25 @@ export default defineComponent({
 
 // Buttons.
 .btn {
+  padding: 10px;
+  margin-top: 10px;
+  opacity: 0.2;
+  transition: opacity 0.8s;
+
+  &:hover {
+    opacity: 1;
+  }
+
   &-primary {
     background-color: purple;
     border: 1px solid purple;
     color: white;
-    padding: 10px;
-    margin-top: 10px;
-    opacity: 0.2;
-    transition: opacity 0.8s;
+  }
 
-    &:hover {
-      opacity: 1;
-    }
+  &-secondary {
+    background-color: blue;
+    border: 1px solid white;
+    color: white;
   }
 }
 
