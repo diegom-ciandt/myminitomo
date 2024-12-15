@@ -25,6 +25,7 @@ export default {
         { id: 7, icon: 'cleric', text: 'Cleric: A priestly champion who wields divine magic in service of a higher power.' },
         { id: 8, icon: 'druid', text: 'Druid: A priest of the Old Faith, wielding the powers of nature—moonlight and plant growth, fire and lightning—and adopting animal forms.' },
         { id: 9, icon: 'sorcerer', text: 'Sorcerer: A spellcaster who draws on inherent magic from a gift or bloodline.' },
+        { id: 10, icon: 'warlock', text: 'Warlock: A spellcaster who gain magic by the help of a magic entity.'},
       ]
     };
   }
