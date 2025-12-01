@@ -103,10 +103,12 @@ export default defineComponent({
         return card.image;
       }
       var index = card.index;
-      var images = require.context('../assets/card/', false, /\.png$/);
-      try {
-        return images('./' + index + ".png");
-      } catch (e) {
+      var images = require.context('../assets/card/', false, /\.(png|jpe?g|webp|gif|avif)$/);
+      var imageName = images.keys().find((key: string) => key.includes(index));
+      if (imageName) {
+        return images(imageName);
+      } else {
+        console.log("Spell image not found for ", index);
         return images('./Spell-not-found.png');
       }
     },
@@ -135,11 +137,11 @@ export default defineComponent({
 
     &-image {
       position: relative;
-      padding-top: 5px;
       border-end-end-radius: 10px;
       border-start-start-radius: 10px;
       background-color: #FFFFFFBB;
-      min-height: 40%;
+      height: 250px;
+      border: 5px solid black;
 
       &-change {
         position: absolute;
@@ -231,13 +233,16 @@ export default defineComponent({
 
   &-materials {
     width: 35%;
-    font-size: clamp(10px, 60%, 20px);
+    font-size: clamp(10px, 50%, 20px);
     font-style: italic;
+    overflow: hidden;
   }
 
   &-description {
     height: 210px;
     padding: 10px 5px;
+    overflow: hidden;
+    overflow-y: scroll;
 
     p {
       margin: 0;
