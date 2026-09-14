@@ -10,6 +10,8 @@
   "dependencies": {
     "@types/lodash.uniqueid": "^4.0.9",
     "core-js": "^3.8.3",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.2.1",
     "lodash.uniqueid": "^4.0.1",
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-0"
@@ -18,9 +20,9 @@
     "@types/wicg-file-system-access": "^2023.10.5",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
-    "@vue/cli-plugin-babel": "~5.0.0",
-    "@vue/cli-plugin-eslint": "~5.0.0",
-    "@vue/cli-plugin-typescript": "~5.0.0",
+    "@vue/cli-plugin-babel": "^5.0.9",
+    "@vue/cli-plugin-eslint": "^5.0.9",
+    "@vue/cli-plugin-typescript": "^5.0.9",
     "@vue/cli-service": "~5.0.0",
     "@vue/eslint-config-typescript": "^9.1.0",
     "eslint": "^7.32.0",

@@ -24,6 +24,8 @@
 <script lang="ts" allowJs="true">
 import { defineComponent } from "vue";
 import uniqueId from "lodash.uniqueid";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 import TheHeader from "./components/TheHeader.vue"
 import TheFooter from "./components/TheFooter.vue"
 import SpellList from "./components/SpellList.vue"
@@ -76,8 +78,44 @@ export default defineComponent({
       this.selectedCards[index] = card;
       localStorage.setItem('selectedCards', JSON.stringify(this.selectedCards));
     },
-    printSelectedCards() {
-      window.print();
+    async printSelectedCards() {
+      const CARD_W = 63.5;
+      const CARD_H = 88.9;
+      const MARGIN = 10;
+      const GAP = 2;
+      const PAGE_W = 297;
+      const PAGE_H = 210;
+
+      const cols = Math.floor((PAGE_W - MARGIN * 2 + GAP) / (CARD_W + GAP));
+      const rows = Math.floor((PAGE_H - MARGIN * 2 + GAP) / (CARD_H + GAP));
+      const perPage = cols * rows;
+
+      const cardEls = document.querySelectorAll<HTMLElement>('.selected-list .card-container');
+      if (!cardEls.length) return;
+
+      document.body.style.cursor = 'wait';
+      try {
+        const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'landscape' });
+
+        for (let i = 0; i < cardEls.length; i++) {
+          if (i > 0 && i % perPage === 0) pdf.addPage();
+
+          const canvas = await html2canvas(cardEls[i], { scale: 2, useCORS: true });
+          const imgData = canvas.toDataURL('image/png');
+
+          const pos = i % perPage;
+          const x = MARGIN + (pos % cols) * (CARD_W + GAP);
+          const y = MARGIN + Math.floor(pos / cols) * (CARD_H + GAP);
+
+          pdf.addImage(imgData, 'PNG', x, y, CARD_W, CARD_H);
+        }
+
+        const now = new Date();
+        const timestamp = now.toISOString().slice(0, 16).replace('T', '_').replace(':', '-');
+        pdf.save(`spell-cards_${timestamp}.pdf`);
+      } finally {
+        document.body.style.cursor = '';
+      }
     }
   }
 });
