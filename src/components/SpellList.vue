@@ -200,6 +200,10 @@ export default defineComponent({
     align-items: flex-start;
     margin: 10px 0;
   }
+
+  &-refresh {
+    display: none;
+  }
 }
 
 .spell-item {
