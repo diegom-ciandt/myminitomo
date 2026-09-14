@@ -241,7 +241,7 @@ export default defineComponent({
     height: 210px;
     padding: 10px 5px;
     overflow: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
 
     p {
       margin: 0;
