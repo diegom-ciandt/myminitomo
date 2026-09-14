@@ -117,29 +117,34 @@ export default defineComponent({
     const error = ref(null);
 
     const getAllSpells = async () => {
-      if (!spells.value) {
-        loading.value = true;
-        try {
-          const spellIndexesResponse = await fetch(BASE_URL + "/api/spells");
-          const spellIndexes = await spellIndexesResponse.json();
+      if (spells.value) return;
+      loading.value = true;
+      try {
+        const query = `{
+          spells(limit: 500) {
+            index name level range casting_time duration
+            concentration ritual components material
+            school { index name }
+            classes { index name }
+            desc
+          }
+        }`;
+        const response = await fetch(BASE_URL + "/graphql", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query }),
+        });
+        const json = await response.json();
+        if (json.errors) throw new Error(json.errors[0].message);
 
-          const spellsPromises = spellIndexes.results.map(async index => {
-            const spellResponse = await fetch(BASE_URL + index.url);
-            return spellResponse.json();
-          });
-
-          let fetchedSpells = await Promise.all(spellsPromises);
-          fetchedSpells = fetchedSpells.sort((a, b) => {
-            return parseInt(a.level) - parseInt(b.level);
-          });
-          
-          spells.value = fetchedSpells;
-          localStorage.setItem('spells', JSON.stringify(spells.value));
-        } catch (e:any) {
-          error.value = e;
-        } finally {
-          loading.value = false;
-        }
+        spells.value = json.data.spells
+          .slice()
+          .sort((a: any, b: any) => a.level - b.level);
+        localStorage.setItem('spells', JSON.stringify(spells.value));
+      } catch (e:any) {
+        error.value = e;
+      } finally {
+        loading.value = false;
       }
     };
 
