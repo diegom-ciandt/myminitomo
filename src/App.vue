@@ -4,7 +4,7 @@
     <HelpBox />
     <SpellList @select-card="addNewSelectedCard"/>
     <div class="selected-list-container">
-      <h2 class="selected-list-title">Selected Cards</h2>
+      <h2 class="selected-list-title">Selected Cards <span v-if="selectedCards.length" class="selected-list-count">({{ selectedCards.length }})</span></h2>
       <button @click="clearSelectedCards" class="btn btn-primary selected-list-refresh">Remove all Cards</button>
       <button @click="printSelectedCards" class="btn btn-primary selected-list-print">Print all Cards</button>
       <ul v-if="selectedCards && selectedCards.length" class="selected-list" >
