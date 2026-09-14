@@ -103,7 +103,10 @@ export default defineComponent({
       }
       var index = card.index;
       var images = require.context('../assets/card/', false, /\.(png|jpe?g|webp|gif|avif)$/);
-      var imageName = images.keys().find((key: string) => key.includes(index));
+      var imageName = images.keys().find((key: string) => {
+        const stem = key.replace(/^\.\//, '').replace(/\.[^.]+$/, '');
+        return stem.toLowerCase() === String(index).toLowerCase();
+      });
       if (imageName) {
         return images(imageName);
       } else {
