@@ -2,7 +2,7 @@
   <the-header />
   <div class="main" id="main">
     <HelpBox />
-    <SpellList @deigo="addNewSelectedCard"/>
+    <SpellList @select-card="addNewSelectedCard"/>
     <div class="selected-list-container">
       <h2 class="selected-list-title not-printable">Selected Cards</h2>
       <button @click="clearSelectedCards" class="btn btn-primary selected-list-refresh not-printable">Remove all Cards</button>
@@ -40,7 +40,7 @@ export default defineComponent({
   },
   data() {
     return {
-      selectedCards: [{}],
+      selectedCards: [] as any[],
     };
   },
   created() {

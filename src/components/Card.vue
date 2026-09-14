@@ -95,7 +95,6 @@ export default defineComponent({
         .replace(diceRegex, '<b class="icon icon-dice-$2">$1$2</b>');
     },
     deleteCard() {
-      console.log('Delete card', this.card);
       this.$emit('delete-selected-card', this.card);
     },
     getImageUrl(card: any) {

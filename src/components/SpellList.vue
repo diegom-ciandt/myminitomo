@@ -156,8 +156,8 @@ export default defineComponent({
       localStorage.removeItem('spells');
       location.reload();
     },
-    selectCard(spell: never) {
-      this.$emit('deigo', spell);
+    selectCard(spell: any) {
+      this.$emit('select-card', spell);
     },
     filterSpells() {
       const levelFilters = Array.from(document.querySelectorAll('#spell-filter-level input:checked')).map((el: any) => el.value);
