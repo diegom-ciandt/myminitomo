@@ -4,9 +4,9 @@
     <HelpBox />
     <SpellList @select-card="addNewSelectedCard"/>
     <div class="selected-list-container">
-      <h2 class="selected-list-title not-printable">Selected Cards</h2>
-      <button @click="clearSelectedCards" class="btn btn-primary selected-list-refresh not-printable">Remove all Cards</button>
-      <button @click="printSelectedCards" class="btn btn-primary selected-list-print not-printable">Print all Cards</button>
+      <h2 class="selected-list-title">Selected Cards</h2>
+      <button @click="clearSelectedCards" class="btn btn-primary selected-list-refresh">Remove all Cards</button>
+      <button @click="printSelectedCards" class="btn btn-primary selected-list-print">Print all Cards</button>
       <ul v-if="selectedCards && selectedCards.length" class="selected-list" >
         <li v-for="card of selectedCards" class="selected-card">
           <Card
@@ -353,22 +353,5 @@ export default defineComponent({
 
 .selected-card + .selected-card {
   margin-bottom: 10px;
-}
-
-@media print {
-  .selected-list-container ul {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    li {
-      transform: scale(.5);
-    }
-  }
 }
 </style>

@@ -69,7 +69,7 @@
         </div>
       </div>
     </div>
-    <div class="card-actions-container not-printable">
+    <div class="card-actions-container">
       <h4>Actions:</h4>
       <button class="btn btn-primary" @click="deleteCard">Remove Card</button>
       <button class="btn btn-primary" @click="card.changeImage = true">Change Image</button>
