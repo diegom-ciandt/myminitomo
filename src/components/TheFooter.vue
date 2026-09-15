@@ -1,6 +1,7 @@
 <template>
   <footer>
     <p>Content under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC-BY-4.0</a> · Wizards of the Coast</p>
+    <p>{{ $t('footer.translation') }} <a href="https://github.com/5e-bits/5e-database" target="_blank" rel="noopener">{{ $t('footer.translationLink') }}</a>.</p>
   </footer>
 </template>
 <script lang="ts" allowJs>

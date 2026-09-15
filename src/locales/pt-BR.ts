@@ -1,0 +1,53 @@
+export default {
+  spellList: {
+    title: 'Lista de Magias',
+    recast: 'Recarregar Magias',
+    filterByName: 'Nome',
+    filterByLevel: 'Nível',
+    filterByClass: 'Classe',
+    cantrip: 'Truque',
+    circle: '{n}º Círculo',
+    loading: "Esta ação requer muita concentração... Carregando Magias...",
+    error: "Oh não! Não conseguimos carregar as Magias! Aposto que é culpa do Necromante!",
+  },
+  card: {
+    actions: 'Ações:',
+    removeCard: 'Remover Carta',
+    changeImage: 'Trocar Imagem',
+    changeImageTitle: 'Trocar esta imagem',
+    imageUrlPlaceholder: 'Insira a URL da imagem',
+    save: 'Salvar',
+  },
+  app: {
+    selectedCards: 'Cartas Selecionadas',
+    removeAll: 'Remover tudo',
+    printAll: 'Imprimir',
+  },
+  helpBox: {
+    title: 'Caixa de Ajuda',
+    howto: {
+      label: 'Como usar:',
+      step1: 'Use os filtros na Lista de Magias para encontrar magias por nome, nível ou classe.',
+      step2: 'Clique em qualquer magia na lista para adicioná-la à sua seleção.',
+      step3: 'Em cada carta, você pode trocar a imagem principal por uma que achar mais adequada.',
+      step4: 'Quando tiver todas as cartas que deseja, clique em Imprimir para imprimi-las.',
+    },
+    cardIcons: {
+      label: 'Ícones das Cartas:',
+      range: 'Alcance: O quão longe a magia alcança.',
+      castingTime: 'Tempo de Conjuração: Quanto tempo leva para conjurar.',
+      duration: 'Duração: Por quanto tempo a magia dura.',
+      concentration: 'Concentração: Requer foco sustentado para manter.',
+      ritual: 'Ritual: Pode ser conjurada como ritual (10 minutos extras, sem slot de magia).',
+      somatic: 'Somático (S): Requer um gesto específico com as mãos.',
+      verbal: 'Verbal (V): Requer uma incantação falada.',
+      material: 'Material (M): Requer um componente físico.',
+    },
+    schoolIcons: { label: 'Ícones das Escolas de Magia:' },
+    classIcons: { label: 'Ícones das Classes:' },
+  },
+  footer: {
+    translation: 'A tradução das cartas depende da disponibilidade no',
+    translationLink: 'repositório 5e-database',
+  },
+}

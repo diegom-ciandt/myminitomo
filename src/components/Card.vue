@@ -11,9 +11,9 @@
           <div class="card-container-image">
             <img v-if="!(card.changeImage ?? false)" class="card-image" v-bind:src="getImageUrl(card)" :alt="card.name" />
             <div v-else class="card-container-image-change">
-              <h4>Change this image</h4>
-              <input type="text" v-model="card.image" placeholder="Enter image URL" />
-              <button class="btn btn-secondary" @click="changeImage()">Save</button>
+              <h4>{{ $t('card.changeImageTitle') }}</h4>
+              <input type="text" v-model="card.image" :placeholder="$t('card.imageUrlPlaceholder')" />
+              <button class="btn btn-secondary" @click="changeImage()">{{ $t('card.save') }}</button>
             </div>
           </div>
           <div class="card-container-data">
@@ -70,9 +70,9 @@
       </div>
     </div>
     <div class="card-actions-container">
-      <h4>Actions:</h4>
-      <button class="btn btn-primary" @click="deleteCard">Remove Card</button>
-      <button class="btn btn-primary" @click="card.changeImage = true">Change Image</button>
+      <h4>{{ $t('card.actions') }}</h4>
+      <button class="btn btn-primary" @click="deleteCard">{{ $t('card.removeCard') }}</button>
+      <button class="btn btn-primary" @click="card.changeImage = true">{{ $t('card.changeImage') }}</button>
     </div>
     <pre>{{ card }}</pre>
   </div>

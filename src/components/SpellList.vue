@@ -1,127 +1,87 @@
 <template>
   <div class="spell-list-container">
-    <h2 class="spell-list-title">Spell List</h2>
-    <button @click="clearLocalStorage" class="btn btn-primary spell-list-refresh">Recast loading Spells</button>
+    <h2 class="spell-list-title">{{ $t('spellList.title') }}</h2>
+    <button @click="clearLocalStorage" class="btn btn-primary spell-list-refresh">{{ $t('spellList.recast') }}</button>
     <div class="spell-list-filters">
-      <input id="spell-search-name" type="text" class="form-control" placeholder="Filter by name" @keyup="filterSpells()" />
+      <input id="spell-search-name" type="text" class="form-control" :placeholder="$t('spellList.filterByName')" @keyup="filterSpells()" />
       <div class="float-shows-next">
-        <b v-if="isFilteredByLevel()">Filter by level</b>
-        <span v-else>Filter by level</span>
+        <b v-if="isFilteredByLevel()">{{ $t('spellList.filterByLevel') }}</b>
+        <span v-else>{{ $t('spellList.filterByLevel') }}</span>
         <div id="spell-filter-level" class="form-control show-on-float">
           <label for="spell-filter-level-0">
             <input type="checkbox" value="0" id="spell-filter-level-0" @change="filterSpells()" />
-            Cantrip
+            {{ $t('spellList.cantrip') }}
           </label>
-          <label for="spell-filter-level-1">
-            <input type="checkbox" value="1" id="spell-filter-level-1" @change="filterSpells()" />
-            1º Circle
-          </label>
-          <label for="spell-filter-level-2">
-            <input type="checkbox" value="2" id="spell-filter-level-2" @change="filterSpells()" />
-            2º Circle
-          </label>
-          <label for="spell-filter-level-3">
-            <input type="checkbox" value="3" id="spell-filter-level-3" @change="filterSpells()" />
-            3º Circle
-          </label>
-          <label for="spell-filter-level-4">
-            <input type="checkbox" value="4" id="spell-filter-level-4" @change="filterSpells()" />
-            4º Circle
-          </label>
-          <label for="spell-filter-level-5">
-            <input type="checkbox" value="5" id="spell-filter-level-5" @change="filterSpells()" />
-            5º Circle
-          </label>
-          <label for="spell-filter-level-6">
-            <input type="checkbox" value="6" id="spell-filter-level-6" @change="filterSpells()" />
-            6º Circle
-          </label>
-          <label for="spell-filter-level-7">
-            <input type="checkbox" value="7" id="spell-filter-level-7" @change="filterSpells()" />
-            7º Circle
-          </label>
-          <label for="spell-filter-level-8">
-            <input type="checkbox" value="8" id="spell-filter-level-8" @change="filterSpells()" />
-            8º Circle
-          </label>
-          <label for="spell-filter-level-9">
-            <input type="checkbox" value="9" id="spell-filter-level-9" @change="filterSpells()" />
-            9º Circle
+          <label v-for="n in 9" :for="'spell-filter-level-' + n" :key="n">
+            <input type="checkbox" :value="n" :id="'spell-filter-level-' + n" @change="filterSpells()" />
+            {{ $t('spellList.circle', { n }) }}
           </label>
         </div>
       </div>
       <div class="float-shows-next">
-        <b v-if="isFilteredByClass()">Filter by class</b>
-        <span v-else>Filter by class</span>
+        <b v-if="isFilteredByClass()">{{ $t('spellList.filterByClass') }}</b>
+        <span v-else>{{ $t('spellList.filterByClass') }}</span>
         <div id="spell-filter-class" class="form-control show-on-float">
-          <label for="spell-filter-class-bard">
-            <input type="checkbox" value="bard" id="spell-filter-class-bard" @change="filterSpells()" />
-            <span class="icon icon-bard"></span>Bard
-          </label>
-          <label for="spell-filter-class-cleric">
-            <input type="checkbox" value="cleric" id="spell-filter-class-cleric" @change="filterSpells()" />
-            <span class="icon icon-cleric"></span>Cleric
-          </label>
-          <label for="spell-filter-class-druid">
-            <input type="checkbox" value="druid" id="spell-filter-class-druid" @change="filterSpells()" />
-            <span class="icon icon-druid"></span>Druid
-          </label>
-          <label for="spell-filter-class-paladin">
-            <input type="checkbox" value="paladin" id="spell-filter-class-paladin" @change="filterSpells()" />
-            <span class="icon icon-paladin"></span>Paladin
-          </label>
-          <label for="spell-filter-class-ranger">
-            <input type="checkbox" value="ranger" id="spell-filter-class-ranger" @change="filterSpells()" />
-            <span class="icon icon-ranger"></span>Ranger
-          </label>
-          <label for="spell-filter-class-sorcerer">
-            <input type="checkbox" value="sorcerer" id="spell-filter-class-sorcerer" @change="filterSpells()" />
-            <span class="icon icon-sorcerer"></span>Sorcerer
-          </label>
-          <label for="spell-filter-class-warlock">
-            <input type="checkbox" value="warlock" id="spell-filter-class-warlock" @change="filterSpells()" />
-            <span class="icon icon-warlock"></span>Warlock
-          </label>
-          <label for="spell-filter-class-wizard">
-            <input type="checkbox" value="wizard" id="spell-filter-class-wizard" @change="filterSpells()" />
-            <span class="icon icon-wizard"></span>Wizard
+          <label v-for="cls of classes" :for="'spell-filter-class-' + cls.index" :key="cls.index">
+            <input type="checkbox" :value="cls.index" :id="'spell-filter-class-' + cls.index" @change="filterSpells()" />
+            <span :class="'icon icon-' + cls.index"></span>{{ cls.name }}
           </label>
         </div>
-      </div>  
+      </div>
     </div>
     <ul v-if="!loading && spells && spells.length">
       <li v-for="spell of spells" :id="spell.index" class="spell-item" @click="selectCard(spell)">
         <p class="spell-item-name"><strong>{{spell.name}}</strong></p>
-        <p v-if="spell.level==0" class="spell-item-level">Cantrip</p>
-        <p v-else class="spell-item-level">{{spell.level }}º Circle</p>
+        <p class="spell-item-level">
+          {{ spell.level == 0 ? $t('spellList.cantrip') : $t('spellList.circle', { n: spell.level }) }}
+        </p>
         <p class="spell-item-classes"><span v-for="dndClass of spell.classes" :class="'no-text icon icon-' + dndClass.name.toLowerCase()"></span></p>
       </li>
     </ul>
-    <p v-if="loading">
-      This action requires a lot of concentration... Loading Spells...
-    </p>
-    <p v-if="error">
-      Oh no! We couldn't load the Spells! I bet it's the Necromancer fault!
-    </p>
+    <p v-if="loading">{{ $t('spellList.loading') }}</p>
+    <p v-if="error">{{ $t('spellList.error') }}</p>
   </div>
 </template>
 <script lang="ts" allowJs>
-import { ref, onMounted, defineComponent, computed } from "vue";
+import { defineComponent } from "vue";
 
 const BASE_URL = 'https://www.dnd5eapi.co';
+
 export default defineComponent({
   name: 'SpellList',
-  setup() {
-    const spells = ref(JSON.parse(localStorage.getItem('spells') || 'null'));
-    const loading = ref(!spells.value);
-    const error = ref(null);
-
-    const getAllSpells = async () => {
-      if (spells.value) return;
-      loading.value = true;
+  props: {
+    classes: { type: Array as () => any[], default: () => [] },
+  },
+  data() {
+    return {
+      spells: null as any[] | null,
+      loading: true,
+      error: null as any,
+    };
+  },
+  created() {
+    this.loadSpells(this.$i18n.locale);
+  },
+  watch: {
+    '$i18n.locale'(newLocale: string) {
+      this.spells = null;
+      this.loadSpells(newLocale);
+    }
+  },
+  methods: {
+    async loadSpells(locale: string) {
+      const cacheKey = `spells_${locale}`;
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) {
+        this.spells = JSON.parse(cached);
+        this.loading = false;
+        return;
+      }
+      this.loading = true;
+      this.error = null;
       try {
         const query = `{
-          spells(limit: 500) {
+          spells(limit: 500, lang: "${locale}") {
             index name level range casting_time duration
             concentration ritual components material
             school { index name }
@@ -129,36 +89,24 @@ export default defineComponent({
             desc
           }
         }`;
-        const response = await fetch(BASE_URL + "/graphql", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+        const response = await fetch(`${BASE_URL}/graphql`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ query }),
         });
         const json = await response.json();
         if (json.errors) throw new Error(json.errors[0].message);
-
-        spells.value = json.data.spells
-          .slice()
-          .sort((a: any, b: any) => a.level - b.level);
-        localStorage.setItem('spells', JSON.stringify(spells.value));
-      } catch (e:any) {
-        error.value = e;
+        const sorted = json.data.spells.slice().sort((a: any, b: any) => a.level - b.level);
+        this.spells = sorted;
+        localStorage.setItem(cacheKey, JSON.stringify(sorted));
+      } catch (e: any) {
+        this.error = e;
       } finally {
-        loading.value = false;
+        this.loading = false;
       }
-    };
-
-    onMounted(getAllSpells);
-
-    return {
-      spells,
-      loading,
-      error,
-    };
-  },
-  methods: {
+    },
     clearLocalStorage() {
-      localStorage.removeItem('spells');
+      localStorage.removeItem(`spells_${this.$i18n.locale}`);
       location.reload();
     },
     selectCard(spell: any) {
@@ -169,10 +117,10 @@ export default defineComponent({
       const classFilters = Array.from(document.querySelectorAll('#spell-filter-class input:checked')).map((el: any) => el.value);
       const spellName = (document.querySelector('#spell-search-name') as HTMLInputElement).value.toLowerCase();
 
-      const spells = JSON.parse(localStorage.getItem('spells') || '[]');
+      const spells = JSON.parse(localStorage.getItem(`spells_${this.$i18n.locale}`) || '[]');
       const filteredSpells = spells.filter((spell: any) => {
         const levelCheck = levelFilters.length <= 0 || levelFilters.includes(spell.level.toString());
-        const classCheck = classFilters.length <= 0 || classFilters.some((dndClass: string) => spell.classes.some((spellClass: any) => spellClass.name.toLowerCase() === dndClass));
+        const classCheck = classFilters.length <= 0 || classFilters.some((dndClass: string) => spell.classes.some((spellClass: any) => spellClass.index === dndClass));
         const nameCheck = spellName === '' || spell.name.toLowerCase().includes(spellName);
         return levelCheck && classCheck && nameCheck;
       });

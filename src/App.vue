@@ -1,12 +1,12 @@
 <template>
   <the-header />
   <div class="main" id="main">
-    <HelpBox />
-    <SpellList @select-card="addNewSelectedCard"/>
+    <HelpBox :classes="dndClasses" :schools="dndSchools" />
+    <SpellList :classes="dndClasses" @select-card="addNewSelectedCard"/>
     <div class="selected-list-container">
-      <h2 class="selected-list-title">Selected Cards <span v-if="selectedCards.length" class="selected-list-count">({{ selectedCards.length }})</span></h2>
-      <button @click="clearSelectedCards" class="btn btn-primary selected-list-refresh">Remove all Cards</button>
-      <button @click="printSelectedCards" class="btn btn-primary selected-list-print">Print all Cards</button>
+      <h2 class="selected-list-title">{{ $t('app.selectedCards') }} <span v-if="selectedCards.length" class="selected-list-count">({{ selectedCards.length }})</span></h2>
+      <button @click="clearSelectedCards" class="btn btn-primary selected-list-refresh">{{ $t('app.removeAll') }}</button>
+      <button @click="printSelectedCards" class="btn btn-primary selected-list-print">{{ $t('app.printAll') }}</button>
       <ul v-if="selectedCards && selectedCards.length" class="selected-list" >
         <li v-for="card of selectedCards" class="selected-card">
           <Card
@@ -43,16 +43,66 @@ export default defineComponent({
   data() {
     return {
       selectedCards: [] as any[],
+      dndClasses: [] as any[],
+      dndSchools: [] as any[],
     };
   },
   created() {
     this.loadSelectedCards();
+    this.loadClasses(this.$i18n.locale);
+    this.loadSchools(this.$i18n.locale);
     window.addEventListener('storage', this.loadSelectedCards);
+  },
+  watch: {
+    '$i18n.locale'(newLocale: string) {
+      this.loadClasses(newLocale);
+      this.loadSchools(newLocale);
+    }
   },
   beforeUnmount() {
     window.removeEventListener('storage', this.loadSelectedCards);
   },
   methods: {
+    async loadSchools(locale: string) {
+      const cacheKey = `schools_${locale}`;
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) { this.dndSchools = JSON.parse(cached); return; }
+      try {
+        const query = `{ magicSchools(lang: "${locale}") { index name desc } }`;
+        const response = await fetch('https://www.dnd5eapi.co/graphql', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query }),
+        });
+        const json = await response.json();
+        if (json.errors) throw new Error(json.errors[0].message);
+        const sorted = json.data.magicSchools.slice().sort((a: any, b: any) => a.name.localeCompare(b.name));
+        this.dndSchools = sorted;
+        localStorage.setItem(cacheKey, JSON.stringify(sorted));
+      } catch (e) {
+        console.error('Failed to load magic schools', e);
+      }
+    },
+    async loadClasses(locale: string) {
+      const cacheKey = `classes_${locale}`;
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) { this.dndClasses = JSON.parse(cached); return; }
+      try {
+        const query = `{ classes(lang: "${locale}") { index name } }`;
+        const response = await fetch('https://www.dnd5eapi.co/graphql', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query }),
+        });
+        const json = await response.json();
+        if (json.errors) throw new Error(json.errors[0].message);
+        const sorted = json.data.classes.slice().sort((a: any, b: any) => a.name.localeCompare(b.name));
+        this.dndClasses = sorted;
+        localStorage.setItem(cacheKey, JSON.stringify(sorted));
+      } catch (e) {
+        console.error('Failed to load classes', e);
+      }
+    },
     clearSelectedCards() {
       this.selectedCards = [];
       localStorage.setItem('selectedCards', JSON.stringify(this.selectedCards));
@@ -153,11 +203,11 @@ export default defineComponent({
   }
 
   &-rogue::after {
-    content: '🗡️';
+    content: '🌑';
   }
 
   &-paladin::after {
-    content: '⚔️';
+    content: '⚜️';
   }
 
   &-bard::after {
@@ -186,6 +236,10 @@ export default defineComponent({
 
   &-artificer::after {
     content: '🔧';
+  }
+
+  &-monk::after {
+    content: '🥋';
   }
 
   //** Icons for magic schools */

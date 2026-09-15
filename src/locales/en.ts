@@ -1,0 +1,53 @@
+export default {
+  spellList: {
+    title: 'Spell List',
+    recast: 'Recast loading Spells',
+    filterByName: 'Name',
+    filterByLevel: 'Level',
+    filterByClass: 'Class',
+    cantrip: 'Cantrip',
+    circle: '{n}º Circle',
+    loading: "This action requires a lot of concentration... Loading Spells...",
+    error: "Oh no! We couldn't load the Spells! I bet it's the Necromancer fault!",
+  },
+  card: {
+    actions: 'Actions:',
+    removeCard: 'Remove Card',
+    changeImage: 'Change Image',
+    changeImageTitle: 'Change this image',
+    imageUrlPlaceholder: 'Enter image URL',
+    save: 'Save',
+  },
+  app: {
+    selectedCards: 'Selected Cards',
+    removeAll: 'Remove all',
+    printAll: 'Print',
+  },
+  helpBox: {
+    title: 'Help Box',
+    howto: {
+      label: 'How to use:',
+      step1: 'Use the filters on the Spell List to narrow down spells by name, level, or class.',
+      step2: 'Click on any spell in the list to add it to your selection.',
+      step3: 'At each card, you can change the main image for one that you think fits your taste.',
+      step4: 'Once you have all the cards you want, click Print to print them.',
+    },
+    cardIcons: {
+      label: 'Card Icons:',
+      range: 'Range: How far the spell reaches.',
+      castingTime: 'Casting Time: How long it takes to cast.',
+      duration: 'Duration: How long the spell lasts.',
+      concentration: 'Concentration: Requires sustained focus to maintain.',
+      ritual: 'Ritual: Can be cast as a ritual (10 extra minutes, no spell slot).',
+      somatic: 'Somatic (S): Requires a specific hand gesture.',
+      verbal: 'Verbal (V): Requires a spoken incantation.',
+      material: 'Material (M): Requires a physical component.',
+    },
+    schoolIcons: { label: 'Magic School Icons:' },
+    classIcons: { label: 'Class Icons:' },
+  },
+  footer: {
+    translation: 'Card translations depend on availability in the',
+    translationLink: '5e-database repository',
+  },
+}

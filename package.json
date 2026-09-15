@@ -14,7 +14,8 @@
     "jspdf": "^4.2.1",
     "lodash.uniqueid": "^4.0.1",
     "vue": "^3.2.13",
-    "vue-class-component": "^8.0.0-0"
+    "vue-class-component": "^8.0.0-0",
+    "vue-i18n": "^9.14.5"
   },
   "devDependencies": {
     "@types/wicg-file-system-access": "^2023.10.5",
@@ -23,7 +24,7 @@
     "@vue/cli-plugin-babel": "^5.0.9",
     "@vue/cli-plugin-eslint": "^5.0.9",
     "@vue/cli-plugin-typescript": "^5.0.9",
-    "@vue/cli-service": "~5.0.0",
+    "@vue/cli-service": "^5.0.9",
     "@vue/eslint-config-typescript": "^9.1.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",

@@ -1,0 +1,53 @@
+export default {
+  spellList: {
+    title: 'Liste des Sorts',
+    recast: 'Recharger les Sorts',
+    filterByName: 'Nom',
+    filterByLevel: 'Niveau',
+    filterByClass: 'Classe',
+    cantrip: 'Tour de magie',
+    circle: '{n}º Cercle',
+    loading: "Cette action demande beaucoup de concentration... Chargement des Sorts...",
+    error: "Oh non ! Nous n'avons pas pu charger les Sorts ! C'est sûrement la faute du Nécromancien !",
+  },
+  card: {
+    actions: 'Actions :',
+    removeCard: 'Supprimer la Carte',
+    changeImage: "Changer l'Image",
+    changeImageTitle: "Changer cette image",
+    imageUrlPlaceholder: "Entrez l'URL de l'image",
+    save: 'Sauvegarder',
+  },
+  app: {
+    selectedCards: 'Cartes Sélectionnées',
+    removeAll: 'Supprimer toutes',
+    printAll: 'Imprimer',
+  },
+  helpBox: {
+    title: "Boîte d'Aide",
+    howto: {
+      label: 'Comment utiliser :',
+      step1: 'Utilisez les filtres de la Liste de Sorts pour trouver des sorts par nom, niveau ou classe.',
+      step2: "Cliquez sur un sort dans la liste pour l'ajouter à votre sélection.",
+      step3: "Pour chaque carte, vous pouvez changer l'image principale par celle qui vous convient.",
+      step4: 'Une fois toutes vos cartes sélectionnées, cliquez sur Imprimer pour les imprimer.',
+    },
+    cardIcons: {
+      label: 'Icônes des Cartes :',
+      range: 'Portée : La distance que le sort atteint.',
+      castingTime: "Temps d'Incantation : Le temps nécessaire pour lancer le sort.",
+      duration: 'Durée : La durée du sort.',
+      concentration: 'Concentration : Nécessite une attention soutenue pour maintenir.',
+      ritual: 'Rituel : Peut être lancé comme rituel (10 minutes supplémentaires, sans emplacement de sort).',
+      somatic: 'Somatique (S) : Nécessite un geste spécifique des mains.',
+      verbal: 'Verbal (V) : Nécessite une incantation prononcée.',
+      material: 'Matériel (M) : Nécessite un composant physique.',
+    },
+    schoolIcons: { label: 'Icônes des Écoles de Magie :' },
+    classIcons: { label: 'Icônes des Classes :' },
+  },
+  footer: {
+    translation: 'La traduction des cartes dépend de la disponibilité dans le',
+    translationLink: 'dépôt 5e-database',
+  },
+}
