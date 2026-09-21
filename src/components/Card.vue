@@ -264,6 +264,21 @@ export default defineComponent({
     flex-direction: column;
   }
 
+  @media (max-width: 430px) {
+    flex-direction: column-reverse;
+
+    .card-container {
+      zoom: 0.8;
+    }
+
+    .card-actions-container {
+      h4 { display: none; }
+      flex-direction: row;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+  }
+
   pre {
     display: none;
   }

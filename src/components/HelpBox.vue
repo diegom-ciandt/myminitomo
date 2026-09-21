@@ -83,6 +83,11 @@ export default {
   padding: 20px;
   border-top-right-radius: 50px;
   border-bottom-left-radius: 50px;
+
+  @media (max-width: 430px) {
+    margin: 0px 16px 16px;
+    max-width: calc(100vw - 32px);
+  }
 }
 
 .help-section {

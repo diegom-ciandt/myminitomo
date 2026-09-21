@@ -1,9 +1,9 @@
 <template>
   <the-header />
   <div class="main" id="main">
-    <HelpBox :classes="dndClasses" :schools="dndSchools" />
-    <SpellList :classes="dndClasses" @select-card="addNewSelectedCard"/>
-    <div class="selected-list-container">
+    <HelpBox :classes="dndClasses" :schools="dndSchools" :class="{ 'tab-active': activeTab === 'help' }" />
+    <SpellList :classes="dndClasses" @select-card="addNewSelectedCard" :class="{ 'tab-active': activeTab === 'spells' }" />
+    <div class="selected-list-container" :class="{ 'tab-active': activeTab === 'cards' }">
       <h2 class="selected-list-title">{{ $t('app.selectedCards') }} <span v-if="selectedCards.length" class="selected-list-count">({{ selectedCards.length }})</span></h2>
       <button @click="clearSelectedCards" class="btn btn-primary selected-list-refresh">{{ $t('app.removeAll') }}</button>
       <button @click="printSelectedCards" class="btn btn-primary selected-list-print">{{ $t('app.printAll') }}</button>
@@ -18,6 +18,20 @@
       </ul>
     </div>
   </div>
+  <nav class="mobile-nav">
+    <button :class="{ active: activeTab === 'help' }" @click="activeTab = 'help'">
+      <span class="mobile-nav-icon">❓</span>
+      <small>Help</small>
+    </button>
+    <button :class="{ active: activeTab === 'spells' }" @click="activeTab = 'spells'">
+      <span class="mobile-nav-icon">📜</span>
+      <small>Spells</small>
+    </button>
+    <button :class="{ active: activeTab === 'cards' }" @click="activeTab = 'cards'">
+      <span class="mobile-nav-icon">🃏</span>
+      <small>Cards <span v-if="selectedCards.length" class="mobile-nav-badge">{{ selectedCards.length }}</span></small>
+    </button>
+  </nav>
   <the-footer />
 </template>
 
@@ -45,6 +59,7 @@ export default defineComponent({
       selectedCards: [] as any[],
       dndClasses: [] as any[],
       dndSchools: [] as any[],
+      activeTab: 'spells' as string,
     };
   },
   created() {
@@ -181,6 +196,118 @@ export default defineComponent({
   & > div {
     width: 30vw;
     margin: 0 3vw;
+  }
+}
+
+.mobile-nav {
+  display: none;
+}
+
+@media (max-width: 430px) {
+  :root {
+    --hdr: 70px;
+    --ftr: 66px;
+    --nav: 64px;
+  }
+
+  .main {
+    position: fixed;
+    top: var(--hdr);
+    bottom: calc(var(--ftr) + var(--nav));
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    padding-bottom: 0;
+    overflow: hidden;
+
+    & > div {
+      display: none;
+      width: 100%;
+      margin: 0;
+      height: 100%;
+      overflow-y: auto;
+
+      &.tab-active {
+        display: block;
+      }
+    }
+  }
+
+  .mobile-nav {
+    display: flex;
+    position: fixed;
+    bottom: var(--ftr);
+    left: 0;
+    width: 100%;
+    height: var(--nav);
+    z-index: 2147483646;
+    background: linear-gradient(135deg, #1a0033 0%, #3b0764 100%);
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.5);
+
+    button {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 4px;
+      background: transparent;
+      border: none;
+      color: #c084fc;
+      cursor: pointer;
+      gap: 2px;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+
+      small {
+        font-size: 1rem;
+        position: relative;
+      }
+
+      &.active {
+        opacity: 1;
+        color: #e8d5ff;
+        border-top: 2px solid #c084fc;
+      }
+    }
+  }
+
+  .mobile-nav-icon {
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+
+  .selected-list-container {
+    padding: 0 12px;
+    box-sizing: border-box;
+  }
+
+  .selected-card {
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(128, 0, 128, 0.35);
+  }
+
+  .spell-list-title,
+  .spell-list-refresh,
+  .spell-list-filters {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .mobile-nav-badge {
+    position: absolute;
+    top: -6px;
+    right: -12px;
+    background: purple;
+    color: white;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
