@@ -4,10 +4,10 @@
     <button @click="clearLocalStorage" class="btn btn-primary spell-list-refresh">{{ $t('spellList.recast') }}</button>
     <div class="spell-list-filters">
       <input id="spell-search-name" type="text" class="form-control" :placeholder="$t('spellList.filterByName')" @keyup="filterSpells()" />
-      <div class="float-shows-next">
+      <div class="float-shows-next" @click.stop="toggleFilter('level')">
         <b v-if="isFilteredByLevel()">{{ $t('spellList.filterByLevel') }}</b>
         <span v-else>{{ $t('spellList.filterByLevel') }}</span>
-        <div id="spell-filter-level" class="form-control show-on-float">
+        <div id="spell-filter-level" class="form-control show-on-float" v-if="openFilter === 'level'" @click.stop>
           <label for="spell-filter-level-0">
             <input type="checkbox" value="0" id="spell-filter-level-0" @change="filterSpells()" />
             {{ $t('spellList.cantrip') }}
@@ -18,10 +18,10 @@
           </label>
         </div>
       </div>
-      <div class="float-shows-next">
+      <div class="float-shows-next" @click.stop="toggleFilter('class')">
         <b v-if="isFilteredByClass()">{{ $t('spellList.filterByClass') }}</b>
         <span v-else>{{ $t('spellList.filterByClass') }}</span>
-        <div id="spell-filter-class" class="form-control show-on-float">
+        <div id="spell-filter-class" class="form-control show-on-float" v-if="openFilter === 'class'" @click.stop>
           <label v-for="cls of classes" :for="'spell-filter-class-' + cls.index" :key="cls.index">
             <input type="checkbox" :value="cls.index" :id="'spell-filter-class-' + cls.index" @change="filterSpells()" />
             <span :class="'icon icon-' + cls.index"></span>{{ cls.name }}
@@ -57,10 +57,17 @@ export default defineComponent({
       spells: null as any[] | null,
       loading: true,
       error: null as any,
+      openFilter: null as string | null,
     };
   },
   created() {
     this.loadSpells(this.$i18n.locale);
+  },
+  mounted() {
+    document.addEventListener('click', this.closeFilters);
+  },
+  beforeUnmount() {
+    document.removeEventListener('click', this.closeFilters);
   },
   watch: {
     '$i18n.locale'(newLocale: string) {
@@ -133,6 +140,12 @@ export default defineComponent({
     isFilteredByClass() {
       return Array.from(document.querySelectorAll('#spell-filter-class input:checked')).map((el: any) => el.value).length > 0;
     },
+    toggleFilter(name: string) {
+      this.openFilter = this.openFilter === name ? null : name;
+    },
+    closeFilters() {
+      this.openFilter = null;
+    },
   }
 });
 </script>
@@ -185,9 +198,30 @@ export default defineComponent({
   width: 200px;
 }
 
-.show-on-float {
-  display: none;
+@media (max-width: 430px) {
+  #spell-search-name {
+    width: 100px;
+  }
 
+  .spell-list-filters {
+    .float-shows-next:last-child {
+      width: 90px;
+      text-align: right;
+    }
+  }
+
+  .float-shows-next {
+    position: relative;
+
+    > .show-on-float {
+      right: 0;
+      left: auto;
+    }
+  }
+}
+
+.show-on-float {
+  display: flex;
   position: absolute;
   background-color: lightgray;
   flex-direction: column;
@@ -202,9 +236,7 @@ export default defineComponent({
 }
 
 .float-shows-next {
-  &:hover > .show-on-float {
-    display: flex;
-  }
+  cursor: pointer;
 }
 
 </style>
